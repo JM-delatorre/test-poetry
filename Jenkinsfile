@@ -39,8 +39,9 @@ pipeline {
 
                 sh 'poetry install'
 
-                sh 'poetry self add poetry-plugin-lambda-build
-                    poetry self add poetry-plugin-export'
+                sh 'poetry self add poetry-plugin-lambda-build'
+                    
+                sh 'poetry self add poetry-plugin-export'
 
                 sh 'poetry build-lambda'
                 sh 'ls -l'
