@@ -32,7 +32,12 @@ pipeline {
             script {
                 // Build the artifact
                 echo "Building the artifact..."
-
+                sh '''
+                  sudo apt update
+                  sudo apt install pipx -y
+                  pipx ensurepath
+                  sudo pipx ensurepath --global
+                '''
                 sh 'pipx install poetry==1.2.0'
 
                 sh 'ls -l'
