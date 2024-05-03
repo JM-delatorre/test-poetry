@@ -70,7 +70,7 @@ pipeline {
                         artifactLocation: 'package.zip',
                         handler: 'app/main.py',
                         awsRegion: "${env.AWS_REGION}",
-                        updateMode: 'Code'
+                        updateMode: 'Code and configuration'
           } 
         }
       }
