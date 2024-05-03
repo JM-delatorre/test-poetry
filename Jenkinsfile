@@ -68,7 +68,9 @@ pipeline {
 
             deployLambda functionName: 'wallib-develop-lambda-sm-seeder',
                         artifactLocation: 'package.zip',
-                        handler: 'app/main.py'
+                        handler: 'app/main.py',
+                        awsRegion: "${env.AWS_REGION}",
+                        updateMode: 'Code'
           } 
         }
       }
