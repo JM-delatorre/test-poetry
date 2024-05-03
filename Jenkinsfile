@@ -66,8 +66,8 @@ pipeline {
           }
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${env.AWS_CREDENTIALS}"]]) {
 
-            deployLambda function: 'wallib-develop-lambda-sm-seeder',
-                        artifact: 'package.zip',
+            deployLambda functionName: 'wallib-develop-lambda-sm-seeder',
+                        artifactLocation: 'package.zip',
                         handler: 'app/main.py'
           } 
         }
