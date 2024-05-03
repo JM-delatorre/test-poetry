@@ -7,7 +7,7 @@ spec:
   nodeName: moon-nodes-1
   containers:
     - name: kubernetes-agent
-      image: test-pipx
+      image: python:3.12.3
       imagePullPolicy: IfNotPresent
       ports:
         - containerPort: 8080

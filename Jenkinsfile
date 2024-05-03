@@ -42,19 +42,21 @@ pipeline {
                 // Build the artifact
                 echo "Building the artifact..."
                 sh '''
-                  pipx ensurepath
+                  export POETRY_HOME=/opt/poetry
+                  python3 -m venv $POETRY_HOME
+                  $POETRY_HOME/bin/pip install poetry==1.2.0
+                  $POETRY_HOME/bin/poetry --version
                 '''
-                sh 'pipx install poetry==1.2.0'
 
                 sh 'ls -l'
 
-                sh 'poetry install'
+                sh '$POETRY_HOME/bin/poetry install'
 
-                sh 'poetry self add poetry-plugin-lambda-build'
+                sh '$POETRY_HOME/bin/poetry self add poetry-plugin-lambda-build'
                     
-                sh 'poetry self add poetry-plugin-export'
+                sh '$POETRY_HOME/bin/poetry self add poetry-plugin-export'
 
-                sh 'poetry build-lambda'
+                sh '$POETRY_HOME/bin/poetry build-lambda'
                 sh 'ls -l'
             }
             
