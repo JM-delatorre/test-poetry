@@ -43,8 +43,6 @@ pipeline {
                   echo "Building the artifact..."
                 '''
 
-                sh 'ls -l'
-
                 sh 'poetry install'
 
                 sh 'poetry self add poetry-plugin-lambda-build'
@@ -52,7 +50,6 @@ pipeline {
                 sh 'poetry self add poetry-plugin-export'
 
                 sh 'poetry build-lambda'
-                sh 'ls -l'
             }
             
             }
@@ -68,7 +65,10 @@ pipeline {
 
           }
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${env.AWS_CREDENTIALS}"]]) {
-            
+
+            deployLambda function: 'wallib-develop-lambda-sm-seeder',
+                        artifact: 'package.zip',
+                        handler: 'app/main.py'
           } 
         }
       }
