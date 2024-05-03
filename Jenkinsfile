@@ -71,7 +71,7 @@ pipeline {
                           artifactLocation: 'package.zip',
                           handler: 'app/main.py',
                           awsRegion: "${env.AWS_REGION}",
-                          updateMode: 'Code and configuration'
+                          updateMode: 'Code and configuration',
                           awsAccessKeyId: "${env.AWS_ACCESS_KEY_ID}",
                           awsSecretKey: "${env.AWS_SECRET_ACCESS_KEY}"
             }
