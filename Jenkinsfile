@@ -39,24 +39,19 @@ pipeline {
         steps {
             container('kubernetes-agent') {
               script {
-                // Build the artifact
-                echo "Building the artifact..."
                 sh '''
-                  export POETRY_HOME=/opt/poetry
-                  python3 -m venv $POETRY_HOME
-                  $POETRY_HOME/bin/pip install poetry==1.2.0
-                  $POETRY_HOME/bin/poetry --version
+                  echo "Building the artifact..."
                 '''
 
                 sh 'ls -l'
 
-                sh '$POETRY_HOME/bin/poetry install'
+                sh 'poetry install'
 
-                sh '$POETRY_HOME/bin/poetry self add poetry-plugin-lambda-build'
+                sh 'poetry self add poetry-plugin-lambda-build'
                     
-                sh '$POETRY_HOME/bin/poetry self add poetry-plugin-export'
+                sh 'poetry self add poetry-plugin-export'
 
-                sh '$POETRY_HOME/bin/poetry build-lambda'
+                sh 'poetry build-lambda'
                 sh 'ls -l'
             }
             
