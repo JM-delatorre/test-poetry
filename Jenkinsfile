@@ -37,7 +37,8 @@ pipeline {
 
       stage('Build artifact') {
         steps {
-            script {
+            container('kubernetes-agent') {
+              script {
                 // Build the artifact
                 echo "Building the artifact..."
                 sh '''
@@ -56,6 +57,9 @@ pipeline {
                 sh 'poetry build-lambda'
                 sh 'ls -l'
             }
+            
+            }
+            
           }
       }
 

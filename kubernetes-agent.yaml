@@ -7,7 +7,7 @@ spec:
   nodeName: moon-nodes-1
   containers:
     - name: kubernetes-agent
-      image: registry.wallib.dev/ubuntu:v0.0.1
+      image: test-pipx
       imagePullPolicy: IfNotPresent
       ports:
         - containerPort: 8080
