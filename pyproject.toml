@@ -6,6 +6,8 @@ authors = ["Richard Mejia <richard.mejia@wallib.co>"]
 readme = "README.md"
 packages=[
   { include = "app" },
+  { include = "main.py", from="."},
+  { include = "logging.conf", from="."}
 ]
 
 [tool.poetry.dependencies]
