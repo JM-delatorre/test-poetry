@@ -15,8 +15,10 @@ pipeline {
 
     stages {
       stage('Load project') {
+
         steps {
-          script {
+          container('kubernetes-agent') {
+            script {
             // Read the content of env.groovy file and store it in a variable
             def envFileContent = readFile "./env.groovy"
             // Print the content of the file to Jenkins console
@@ -27,6 +29,8 @@ pipeline {
           slackSend channel: "${SLACK_CHANNEL}",
                     color: "warning",
                     message: "*LAUNCHING:* @channel Jenkins is launching into ${ENVIRONMENT} the following job #${env.BUILD_NUMBER} for project *${env.JOB_NAME}* (${env.BUILD_URL}). Please pending changes."
+        }
+          
 
         }
       }
