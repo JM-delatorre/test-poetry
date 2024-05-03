@@ -26,9 +26,9 @@ pipeline {
             // Load the Groovy script
             load "./env.groovy"
           }
-          slackSend channel: "${SLACK_CHANNEL}",
-                    color: "warning",
-                    message: "*LAUNCHING:* @channel Jenkins is launching into ${ENVIRONMENT} the following job #${env.BUILD_NUMBER} for project *${env.JOB_NAME}* (${env.BUILD_URL}). Please pending changes."
+          // slackSend channel: "${SLACK_CHANNEL}",
+          //           color: "warning",
+          //           message: "*LAUNCHING:* @channel Jenkins is launching into ${ENVIRONMENT} the following job #${env.BUILD_NUMBER} for project *${env.JOB_NAME}* (${env.BUILD_URL}). Please pending changes."
         }
           
 
@@ -73,31 +73,31 @@ pipeline {
                           awsRegion: "${env.AWS_REGION}",
                           updateMode: 'Code and configuration'
                           awsAccessKeyId: "${env.AWS_ACCESS_KEY_ID}",
-                          awsSecretKey: "${env.AWS_SECRET_ACCESS_KEY
-            } 
+                          awsSecretKey: "${env.AWS_SECRET_ACCESS_KEY}"
+            }
           }
         }
       }
     }
     // Post-build actions
-    post {
-        success {
-            sh 'echo success'
+    // post {
+    //     success {
+    //         sh 'echo success'
 
-            slackSend channel: "${SLACK_CHANNEL}",
-                      color: COLOR_MAP[currentBuild.currentResult],
-                      message: "*${currentBuild.currentResult}:* @channel Jenkins has completed successfully the following job #${env.BUILD_NUMBER} for project *${env.JOB_NAME}* (${env.BUILD_URL}) after ${currentBuild.durationString}. Please test changes in ${ENVIRONMENT}."
+    //         slackSend channel: "${SLACK_CHANNEL}",
+    //                   color: COLOR_MAP[currentBuild.currentResult],
+    //                   message: "*${currentBuild.currentResult}:* @channel Jenkins has completed successfully the following job #${env.BUILD_NUMBER} for project *${env.JOB_NAME}* (${env.BUILD_URL}) after ${currentBuild.durationString}. Please test changes in ${ENVIRONMENT}."
 
-        }
+    //     }
 
-        failure {
-            sh 'echo failed'
+    //     failure {
+    //         sh 'echo failed'
 
-            slackSend channel: "${SLACK_CHANNEL}",
-                      color: COLOR_MAP[currentBuild.currentResult],
-                      message: "*${currentBuild.currentResult}:* @channel Jenkins has failed to deploy the following job #${env.BUILD_NUMBER} for project *${env.JOB_NAME}* (${env.BUILD_URL}) after ${currentBuild.durationString}. Please check now."
+    //         slackSend channel: "${SLACK_CHANNEL}",
+    //                   color: COLOR_MAP[currentBuild.currentResult],
+    //                   message: "*${currentBuild.currentResult}:* @channel Jenkins has failed to deploy the following job #${env.BUILD_NUMBER} for project *${env.JOB_NAME}* (${env.BUILD_URL}) after ${currentBuild.durationString}. Please check now."
 
-        }
-    }
+    //     }
+    // }
 
 }
