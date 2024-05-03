@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    agent: kubernetes-agent
+spec:
+  nodeName: moon-nodes-1
+  containers:
+    - name: kubernetes-agent
+      image: volf52/pipx
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 8080
+      volumeMounts:
+        - name: jenkins-agent
+          mountPath: /var/jenkins_home
+          subPath: "develop/kubernetes-agent/jenkins"
+      env:
+        - name: DOCKER_HOST
+          value: tcp://docker:2376
+        - name: DOCKER_TLS_VERIFY
+          value: "1"
+        - name: DOCKER_CERT_PATH
+          value: /var/jenkins_home/certs/client
+  imagePullSecrets:
+    - name: registry-secret
+  volumes:
+    - name: jenkins-agent
+      persistentVolumeClaim:
+        claimName: nfs-develop-pvc

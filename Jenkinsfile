@@ -6,7 +6,11 @@ def COLOR_MAP = [
 pipeline {
 
     agent {
-        label 'master'
+      kubernetes {
+            defaultContainer 'kubernetes-agent'
+            yamlFile "./kubernetes-agent.yaml"
+            retries 2
+      }
     }
 
     stages {
