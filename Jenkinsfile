@@ -59,19 +59,23 @@ pipeline {
 
       stage('Deploy artifact') {
         steps {
-          script {
-            // Deploy the artifact
-            echo "Deploying the artifact..."
+          container('kubernetes-agent') {
+            script {
+              // Deploy the artifact
+              echo "Deploying the artifact..."
 
+            }
+            withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${env.AWS_CREDENTIALS}"]]) {
+
+              deployLambda functionName: 'wallib-develop-lambda-sm-seeder',
+                          artifactLocation: 'package.zip',
+                          handler: 'app/main.py',
+                          awsRegion: "${env.AWS_REGION}",
+                          updateMode: 'Code and configuration'
+                          awsAccessKeyId: "${env.AWS_ACCESS_KEY_ID}",
+                          awsSecretKey: "${env.AWS_SECRET_ACCESS_KEY
+            } 
           }
-          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${env.AWS_CREDENTIALS}"]]) {
-
-            deployLambda functionName: 'wallib-develop-lambda-sm-seeder',
-                        artifactLocation: 'package.zip',
-                        handler: 'app/main.py',
-                        awsRegion: "${env.AWS_REGION}",
-                        updateMode: 'Code and configuration'
-          } 
         }
       }
     }
